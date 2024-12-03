@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="furuyoni_project.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="pragmas query browser" current="2"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1291"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="MatchInfo" custom_title="0" dock_id="1" table="4,9:mainMatchInfo"/><dock_state state="000000ff00000000fd00000001000000020000023e00000278fc0100000001fb000000160064006f0063006b00420072006f007700730065003101000000000000023e0000015500ffffff0000023e0000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="CardInfo" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort><column index="0" mode="0"/></sort><column_widths><column index="1" value="181"/><column index="2" value="65"/><column index="3" value="143"/><column index="4" value="66"/><column index="5" value="47"/><column index="6" value="20"/><column index="7" value="26"/><column index="8" value="21"/><column index="9" value="20"/><column index="10" value="20"/><column index="11" value="20"/><column index="12" value="673"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="CharaInfo" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="73"/><column index="2" value="70"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="MatchInfo" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="72"/><column index="2" value="54"/><column index="3" value="54"/><column index="4" value="45"/><column index="5" value="54"/><column index="6" value="54"/><column index="7" value="45"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1*">drop table if exists CardInfo;
+drop table if exists CharaInfo;
+drop table if exists MatchInfo;
+
+
+create table CardInfo(cardID text, cardchara text, cardName text,
+cardtype1 text, cardtype2 text, sdistance int, edistance int,
+damage1 int, damage2 int, token int, cost int, cardText text,
+
+primary key(cardID)
+);
+
+create table CharaInfo(charaname text,
+characode text,
+primary key(charaname)
+);
+
+create table MatchInfo(
+matchTime text,
+p1pick1 text, p1pick2 text, p1ban text,
+p2pick1 text, p2pick2 text, p2ban text,
+primary key(matchtime)
+);
+
+delete from MatchInfo;
+
+insert into MatchInfo values(
+'2023/10/23/19:36',
+'yurina', 'honoka','utsuro',
+'saine','himika','tokoyo'
+);</sql><sql name="SQL 2*">delete from CardInfo;
+delete from CharaInfo;
+
+insert into CardInfo values(
+'NA-01-yurina-O-N-1','yurina','참','attack',NULL,3,4,3,1,NULL,NULL,
+NULL
+);
+insert into CardInfo values(
+'NA-01-yurina-O-N-2','yurina','일섬','attack',NULL,3,3,2,2,NULL,NULL,
+'자신 라이프가 3 이하면 +1/+0'
+);
+insert into CardInfo values(
+'NA-01-yurina-O-N-3','yurina','자루치기','attack',NULL,1,2,2,1,NULL,NULL,
+'자신 라이프가 3 이하면 다음 공격에 +1/+0'
+);
+insert into CardInfo values(
+'NA-01-yurina-O-N-4','yurina','거합','attack','full',3,4,4,3,NULL,NULL,
+'간격이 2 이하면 -1/-1'
+);
+insert into CardInfo values(
+'NA-01-yurina-O-N-5','yurina','기백','act',NULL,3,4,3,1,2,NULL,
+'집중력 +1, 이번 턴 다음 다른 여신의 공격에 대응불가(통상패)와 거리확대(근1)'
+);
+insert into CardInfo values(
+'NA-01-yurina-O-N-6','yurina','압도','give',NULL,3,4,3,1,4,NULL,
+'빈틈, [파기시] 공격 『1-4, 3/-』'
+);
+insert into CardInfo values(
+'NA-01-yurina-O-N-7','yurina','기염만장','give','full',3,4,3,1,NULL,NULL,
+'[전개중]자신 라이프가 3 이하면 다른 여신의 공격에 +1/+1과 초극'
+);
+insert into CardInfo values(
+'NA-01-yurina-O-S-1','yurina','달그림자 떨어지니','attack',NULL,3,4,3,1,NULL,7,
+NULL
+);
+insert into CardInfo values(
+'NA-01-yurina-O-S-2','yurina','해안에 파랑 일며','attack','counter',0,10,2,NULL,NULL,3,
+'종단, 대응한 공격을 -2/+0'
+);
+insert into CardInfo values(
+'NA-01-yurina-O-S-3','yurina','쪽배에서 쉬노니','act',NULL,NULL,NULL,NULL,NULL,NULL,2,
+'더스트→오라 (자신):5, 즉재기:자신 라이프가 3 이하가 됨'
+);
+insert into CardInfo values(
+'NA-01-yurina-O-S-4','yurina','아마네 유리나의 저력','attack','full',1,4,5,5,NULL,5,
+'자신 라이프가 3 이하일 때에만 사용 가능'
+);
+insert into CardInfo values(
+'NA-02-saine-O-N-1','saine','팔방 휘두르기','attack',NULL,4,5,2,1,NULL,NULL,
+'【공격후】 자신 오라가 1 이하면 공격 『4-5, 2/1』'
+);
+insert into CardInfo values(
+'NA-02-saine-O-N-2','saine','후려베기','attack','counter',4,5,3,1,NULL,NULL,
+NULL
+);
+insert into CardInfo values(
+'NA-02-saine-O-N-3','saine','무게추','attack','counter',2,3,2,1,NULL,NULL,
+'【공격후】자신 오라가 1 이하면 더스트→간격:1'
+);
+insert into CardInfo values(
+'NA-02-saine-O-N-4','saine','간파','act',NULL,NULL,NULL,NULL,NULL,NULL,NULL,
+'간격⇔더스트:1 자신 오라가 1 이하면 대응으로 사용 가능'
+);
+insert into CardInfo values(
+'NA-02-saine-O-N-5','saine','권역','give',NULL,null,null,null,null,2,NULL,
+'【전개중】이 카드에서 이동하는 벚꽃결정은 간격으로, 달인의 간격+1'
+);
+insert into CardInfo values(
+'NA-02-saine-O-N-6','saine','충음정','give','counter',null,null,null,null,1,NULL,
+'【전개시】 대응한 공격을 -1/+0【파기시】 공격 『0-10, 1/-, 대응불가』 후 더스트→간격:1'
+);
+insert into CardInfo values(
+'NA-02-saine-O-N-7','saine','무음벽','attack','full',null,null,null,null,5,NULL,
+'【전개중】 이 위의 벚꽃결정으로 공격을 방어 가능'
+);
+insert into CardInfo values(
+'NA-02-saine-O-S-1','saine','율동호극','act',NULL,null,null,null,null,NULL,6,
+'공격 『3-4, 1/1』 『4-5, 1/1』 『3-5, 2/2』'
+);
+insert into CardInfo values(
+'NA-02-saine-O-S-2','saine','향명공진','attack',NULL,null,null,null,null,NULL,8,
+'상대 오라만큼 소모값 감소, 오라(상대)→간격:3'
+);
+insert into CardInfo values(
+'NA-02-saine-O-S-3','saine','음무쇄빙','attack','counter',null,null,null,null,NULL,2,
+'대응한 공격을 -1/-1, 재기:자신의 오라가 1 이하'
+);
+insert into CardInfo values(
+'NA-02-saine-O-S-4','saine','히사메 사이네의 최후의 종극','attack','counter',1,5,5,5,NULL,5,
+'비장패에 대한 대응으로만 사용 가능'
+);
+insert into CardInfo values(
+'NA-03-himika-O-N-1','himika','슛','attack',NULL,4,10,2,1,NULL,NULL,
+NULL
+);
+insert into CardInfo values(
+'NA-03-himika-O-N-2','himika','래피드 파이어','attack',NULL,6,8,2,1,NULL,NULL,
+'3+장째라면 +1/+1'
+);
+insert into CardInfo values(
+'NA-03-himika-O-N-3','himika','매그넘 캐논','attack',NULL,5,8,3,2,NULL,NULL,
+'라이프(자신)→더스트:1'
+);
+insert into CardInfo values(
+'NA-03-himika-O-N-4','himika','풀 버스트','attack','full',5,9,3,1,NULL,NULL,
+'오라와 라이프 양쪽에 데미지'
+);
+insert into CardInfo values(
+'NA-03-himika-O-N-5','himika','백스텝','act',NULL,null,null,null,null,NULL,NULL,
+'더스트→간격:1, 카드 +1'
+);
+insert into CardInfo values(
+'NA-03-himika-O-N-6','himika','백드래프트','act',NULL,null,null,null,null,NULL,NULL,
+'상대 위축, 3+장째라면 다음 오라 데미지 「-」 아닌 다른 여신 공격 +1/+1'
+);
+insert into CardInfo values(
+'NA-03-himika-O-N-7','himika','스모크','give',NULL,null,null,null,null,3,NULL,
+'【전개중】 카드 화살표로 간격의 결정 이동 불가'
+);
+insert into CardInfo values(
+'NA-03-himika-O-S-1','himika','레드 불릿','attack',NULL,5,10,3,1,NULL,0,
+NULL
+);
+insert into CardInfo values(
+'NA-03-himika-O-S-2','himika','크림슨 제로','attack',NULL,0,2,2,2,NULL,5,
+'오라와 라이프 양쪽에 데미지, 간격 0이면 대응불가'
+);
+insert into CardInfo values(
+'NA-03-himika-O-S-3','himika','스칼렛 이매진','act',NULL,null,null,null,null,NULL,3,
+'카드 +2, 손패 1장 덮음패로'
+);
+insert into CardInfo values(
+'NA-03-himika-O-S-4','himika','버밀리온 필드','act',NULL,null,null,null,null,NULL,2,
+'3+장째라면 더스트→간격:2, 재기: 손패 0장'
+);
+insert into CardInfo values(
+'NA-04-tokoyo-O-N-1','tokoyo','빗어내리기','attack',NULL,4,4,null,1,NULL,NULL,
+'【공격후】 집중력 2라면 패산 위로 되돌림'
+);
+insert into CardInfo values(
+'NA-04-tokoyo-O-N-2','tokoyo','우아한 타격','attack','counter',2,4,2,1,NULL,NULL,
+'【공격후】 집중력 2라면 패산 위로 되돌림'
+);
+insert into CardInfo values(
+'NA-04-tokoyo-O-N-3','tokoyo','날뛰는 토끼','act',NULL,null,null,null,null,NULL,NULL,
+'【공격후】 집중력 2라면 패산 위로 되돌림'
+);
+insert into CardInfo values(
+'NA-04-tokoyo-O-N-4','tokoyo','시의 춤','act','counter',null,null,null,null,NULL,NULL,
+'【공격후】 집중력 2라면 패산 위로 되돌림'
+);
+insert into CardInfo values(
+'NA-04-tokoyo-O-N-5','tokoyo','부채뒤집기','act','full',null,null,null,null,NULL,NULL,
+'더스트→오라(자신):2, 버림패와 덮음패에서 2장까지 패산 아래로'
+);
+insert into CardInfo values(
+'NA-04-tokoyo-O-N-6','tokoyo','바람의 무대','give',NULL,null,null,null,null,2,NULL,
+'【전개시】 간격→오라(자신):2 【파기시】 오라(자신)→간격:2'
+);
+insert into CardInfo values(
+'NA-04-tokoyo-O-N-7','tokoyo','맑음의 무대','give',NULL,null,null,null,null,2,NULL,
+'종단, 【전개시】 집중력 2로 【파기시】 공격 『3-6, -/1』'
+);
+insert into CardInfo values(
+'NA-04-tokoyo-O-S-1','tokoyo','영원의 꽃','attack',NULL,0,10,null,1,NULL,5,
+'대응한 공격 무효화'
+);
+insert into CardInfo values(
+'NA-04-tokoyo-O-S-2','tokoyo','천년의 새','attack',NULL,3,4,2,2,NULL,2,
+'패산 재구성'
+);
+insert into CardInfo values(
+'NA-04-tokoyo-O-S-3','tokoyo','무궁의 바람','attack',NULL,3,8,1,1,NULL,1,
+'대응불가, 상대는 공격 아닌 손패 1장 버림패로, 없으면 손패 공개
+재기:집중력 2'
+);
+insert into CardInfo values(
+'NA-04-tokoyo-O-S-4','tokoyo','상세의 달','act',NULL,null,null,null,null,NULL,2,
+'집중력 2로, 상대 집중력 0으로, 상대 위축'
+);
+insert into CardInfo values(
+'NA-05-oboro-O-N-1','oboro','철사','attack',NULL,3,4,2,2,NULL,NULL,
+'설치'
+);
+insert into CardInfo values(
+'NA-05-oboro-O-N-2','oboro','그림자마름','attack',NULL,2,2,2,1,NULL,NULL,
+'설치, 대응불가, 덮음패에서 사용하면 상대 손패 보고 1장 골라 덮음패로'
+);
+insert into CardInfo values(
+'NA-05-oboro-O-N-3','oboro','참격난무','attack','full',2,4,3,2,NULL,NULL,
+'상대가 이번 턴 오라 데미지를 받았다면 +1/+1'
+);
+insert into CardInfo values(
+'NA-05-oboro-O-N-4','oboro','닌자걸음','act',NULL,null,null,null,null,NULL,NULL,
+'설치, 더스트→간격:1
+덮음패에서 사용했다면 덮음패에서 설치 1장 사용 가능'
+);
+insert into CardInfo values(
+'NA-05-oboro-O-N-5','oboro','유도','act','counter',null,null,null,null,NULL,NULL,
+'설치, 선택: 간격→오라(상대):1 / 오라(상대)→플레어(상대):1'
+);
+insert into CardInfo values(
+'NA-05-oboro-O-N-6','oboro','분신술','act','full',null,null,null,null,NULL,NULL,
+'덮음패에서 전력 아닌 카드 1장 골라 대응불가로 2번 연속 사용'
+);
+insert into CardInfo values(
+'NA-05-oboro-O-N-7','oboro','생체활성','act',NULL,null,null,null,null,4,NULL,
+'빈틈, 설치, 【파기시】 사용된 비장패 1장 미사용으로'
+);
+insert into CardInfo values(
+'NA-05-oboro-O-S-1','oboro','쿠마스케','attack','full',3,4,2,2,NULL,4,
+'【공격후】 공격 『3-4, 2/2』 X번 수행(X=덮음패 장수)'
+);
+insert into CardInfo values(
+'NA-05-oboro-O-S-2','oboro','토비카게','act','counter',3,4,2,2,NULL,4,
+'덮음패에서 전력 아닌 카드 1장 사용'
+);
+insert into CardInfo values(
+'NA-05-oboro-O-S-3','oboro','우로우오','ack',NULL,3,4,2,2,NULL,4,
+'【사용됨】 재구성 1번에 설치 카드 여러 장 사용 가능'
+);
+insert into CardInfo values(
+'NA-05-oboro-O-S-4','oboro','미카즈라','attack',NULL,3,7,1,1,NULL,0,
+'더스트→플레어(자신):1
+재기: 자신 플레어가 0'
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-N-1-a','yukihi','숨긴 바늘','attack',NULL,4,6,3,1,NULL,NULL,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-N-2-a','yukihi','숨긴 불꽃','attack',NULL,5,6,1,1,NULL,NULL,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-N-3-a','yukihi','떨쳐내기','attack',NULL,2,5,1,1,NULL,NULL,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-N-4-a','yukihi','휘두르기','attack','full',4,6,5,null,NULL,NULL,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-N-5','yukihi','우산 돌리기','act',NULL,null,null,null,null,NULL,NULL,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-N-6-a','yukihi','뒷걸음질','act','counter',null,null,null,null,NULL,NULL,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-N-7','yukihi','인연 맺기','attack',NULL,null,null,null,null,2,NULL,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-N-1-b','yukihi','머금은 바늘','attack',NULL,0,2,1,2,NULL,NULL,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-N-2-b','yukihi','손뼉치기','attack',NULL,0,2,1,1,NULL,NULL,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-N-3-b','yukihi','끌어당기기','attack',NULL,0,2,1,1,NULL,NULL,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-N-4-b','yukihi','푹 찌르기','attack','full',0,2,null,2,NULL,NULL,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-N-6-b','yukihi','파고들기','act','counter',null,null,null,null,NULL,NULL,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-S-1-a','yukihi','흩날리는 눈꽃','attack',null,3,5,3,1,NULL,2,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-S-1-b','yukihi','흩날리는 눈꽃','attack',null,0,2,0,0,NULL,2,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-S-2-a','yukihi','일렁이는 등불','attack',null,4,6,0,0,NULL,5,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-S-2-b','yukihi','일렁이는 등불','attack',null,0,0,4,5,NULL,5,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-S-3','yukihi','질척이는 속내','give','full',null,null,null,null,7,3,
+NULL
+);
+insert into CardInfo values(
+'NA-06-yukihi-O-S-4','yukihi','빙글도는 몸짓','act','counter',null,null,null,null,NULL,1,
+NULL
+);</sql><current_tab id="1"/></tab_sql></sqlb_project>

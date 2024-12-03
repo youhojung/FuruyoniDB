@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Card Data</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Card Character List</h1>
+    <ul>
+        {% for CardInfo in chara %}
+        <a href="{{ url_for('cardDBmenu') }}">{{ CardInfo.cardchara }}</a><br>
+        {% endfor %}
+    </ul>
+    <a href="/furuDB/">Back to Main</a>
+</body>
+</html>
