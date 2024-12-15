@@ -27,16 +27,40 @@ def cardInfo(charaname, another):
         (charaname, another)
     ).fetchone()
     card_data = cursor.execute(
-        'SELECT * FROM CardInfo WHERE cardchara = ? AND cardID Like ?',
+        'SELECT * FROM CardInfo WHERE cardchara = ? AND cardID LIKE ?',
         (charaname, f'%-{another}-%')
     ).fetchall()
+    complete_card_data = []
+    for card in card_data:
+        if card['cardname'] is None:
+            card_parts = card["cardID"].split("-")
+            card_chara = card_parts[2]
+            card_another = card_parts[3]
+            
+            if card_another != "O":
+                card_parts[3] = "O"
+            
+            replacement_card_id = "-".join(card_parts)
+            replacement_card = cursor.execute(
+                'SELECT * FROM CardInfo WHERE cardchara = ? AND cardID = ?',
+                (card_chara, replacement_card_id)
+            ).fetchone()
+
+            if replacement_card:
+                complete_card_data.append(replacement_card)
+            else:
+                complete_card_data.append(card)
+        else:
+            complete_card_data.append(card)
+
     db.close()
+
     return render_template(
         'cardInfo.html',
         charaname=charaname,
         another=another,
         chara_info=chara_info,
-        card_data=card_data
+        card_data=complete_card_data
     )
 
 
