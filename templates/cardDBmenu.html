@@ -7,8 +7,8 @@
 <body>
     <h1>Card Character List</h1>
     <ul>
-        {% for CardInfo in chara %}
-        <a href="{{ url_for('cardDBmenu') }}">{{ CardInfo.cardchara }}</a><br>
+        {% for CharaInfo in chara %}
+        <a href="/furuDB/cardDB/{{ CharaInfo.charaname }}-{{ CharaInfo.another }}">{{ CharaInfo.Kname }}</a>
         {% endfor %}
     </ul>
     <a href="/furuDB/">Back to Main</a>
