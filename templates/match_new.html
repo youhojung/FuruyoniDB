@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>New Match Data</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h1>당신의 대전 기록을 남겨주세요.</h1>
+
+        <form action={{ url_for('match_new') }} method='POST'>
+            <p>매치 시간 : </p>
+            <input type='text' size='30' name='matchTime'>
+            <p>승자 1픽 : </p>
+            <input type='text' size='30' name='p1pick1'>
+            <p>승자 2픽 : </p>
+            <input type='text' size='30' name='p1pick2'>
+            <p>승자 밴 : </p>
+            <input type='text' size='30' name='p1ban'>
+            <p>패자 1픽 : </p>
+            <input type='text' size='30' name='p2pick1'>
+            <p>패자 2픽 : </p>
+            <input type='text' size='30' name='p2pick2'>
+            <p>패자 밴 : </p>
+            <input type='text' size='30' name='p2ban'>
+            <input type='submit' value='Create'>
+        </form>
+        <a href="/furuDB/matchDB/">이전 페이지로 돌아가기</a>
+    </body>
+</html>

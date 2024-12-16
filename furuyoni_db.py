@@ -69,9 +69,29 @@ def matchDBmenu():
     db = sqlite3.connect('furuyoni_project.db')
     db.row_factory = sqlite3.Row
     cursor = db.cursor()
-    items = cursor.execute('SELECT * FROM MatchInfo').fetchall()
+    items = cursor.execute('SELECT * FROM MatchInfo ORDER BY matchTime ASC').fetchall()
     db.close()
     return render_template('matchDBmenu.html', match=items)
+
+@app.route('/furuDB/matchDB/new/', methods=['GET', 'POST'])
+def match_new():
+    if request.method == 'POST' :
+        db = sqlite3.connect("furuyoni_project.db")
+        cursor = db.cursor()
+        cursor.execute(
+            'insert into MatchInfo (matchTime, p1pick1, p1pick2, p1ban, p2pick1, p2pick2, p2ban) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [request.form['matchTime'],
+             request.form['p1pick1'],
+             request.form['p1pick2'],
+             request.form['p1ban'],
+             request.form['p2pick1'],
+             request.form['p2pick2'],
+             request.form['p2ban']]
+        )
+        db.commit()
+        db.close()
+        return redirect(url_for('matchDBmenu'))
+    return render_template('match_new.html')
 
 if __name__ == '__main__':
     app.debug = True

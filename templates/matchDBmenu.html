@@ -5,13 +5,34 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <h1>match List</h1>
-    <ul>
-        {% for MatchInfo in match %}
-        <li>
-        매치 시간 : {{ MatchInfo.matchTime }}</li><br>
-        {% endfor %}
-    </ul>
-    <a href="/furuDB/">Back to Main</a>
+    <h1>매치 정보</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>매치 시간</th>
+                <th>승자 픽1</th>
+                <th>승자 픽2</th>
+                <th>승자 밴</th>
+                <th>패자 픽1</th>
+                <th>패자 픽2</th>
+                <th>패자 밴</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for MatchInfo in match %}
+            <tr>
+                <td>{{ MatchInfo.matchTime }}</td>
+                <td>{{ MatchInfo.p1pick1 }}</td>
+                <td>{{ MatchInfo.p1pick2 }}</td>
+                <td>{{ MatchInfo.p1ban }}</td>
+                <td>{{ MatchInfo.p2pick1 }}</td>
+                <td>{{ MatchInfo.p2pick2 }}</td>
+                <td>{{ MatchInfo.p2ban }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/furuDB/matchDB/new/">매치 결과 등록하기</a><br>
+    <a href="/furuDB/">메인 메뉴로 돌아가기</a>
 </body>
 </html>

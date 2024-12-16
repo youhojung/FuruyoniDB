@@ -3,29 +3,94 @@
 <head>
     <title>{{ chara_info['Kname'] }} - Card Info</title>
     <meta charset="UTF-8">
+    <style>
+        th{text-align: center;}
+    </style>
 </head>
 <body>
-    <h1>Card Info for {{ chara_info['Kname'] }} ({{ charaname }}-{{ another }})</h1>
+    <h1>{{ chara_info['Kname'] }}</h1>
     <p>{{ chara_info['description'] }}</p>
-
-    <h2>Card List</h2>
     <table border="1">
         <thead>
             <tr>
-                <th>카드명</th>
-                <th>카드 효과</th>
+                <th>이름</th>
+                <th>타입</th>
+                <th>거리</th>
+                <th>데미지</th>
+                <th>납</th>
+                <th>소비</th>
+                <th>효과</th>
             </tr>
         </thead>
         <tbody>
             {% for card in card_data %}
             <tr>
                 <td>{{ card['cardname'] }}</td>
+                <td style="text-align: center;">{% if card['cardtype1']=='attack' %}
+                    공격
+                    {% elif card['cardtype1']=='act' %}
+                    행동
+                    {% elif card['cardtype1']=='give' %}
+                    부여
+                    {% endif %}
+                    {% if card['cardtype2'] is not none %}
+                    / 
+                        {% if card['cardtype2']=='counter' %}
+                        대응
+                        {% elif card['cardtype2']=='full' %}
+                        전력
+                        {% endif %}
+                    {% endif %}</td>
+                <td style="text-align: center;">{% if card['sdistance'] is not none %}
+                        {{ card['sdistance'] }}
+                    {% endif %}
+                    {% if card['cardtype1']=='attack' %}
+                    -
+                    {% endif %}
+                    {% if card['edistance'] is not none %}
+                        {{ card['edistance'] }}
+                    {% endif %}</td>
+                <td style="text-align: center;">{% if card['damage1'] is not none %}
+                        {% if card['damage1']==255 %}
+                            X
+                        {% elif card['damage1']==256 %}
+                            Y
+                        {% else %}
+                            {{ card['damage1'] }}
+                        {% endif %}
+                    {% elif card['cardtype1']=='attack' and card['damage1'] is none %}
+                        -
+                    {% endif %}
+                    
+                    {% if card['cardtype1']=='attack' %}
+                    /
+                    {% endif %}
+
+                    {% if card['damage2'] is not none %}
+                        {% if card['damage2']==255 %}
+                            X
+                        {% elif card['damage2']==256 %}
+                            Y
+                        {% else %}
+                            {{ card['damage2'] }}
+                        {% endif %}
+                    {% elif card['cardtype1']=='attack' and card['damage2'] is none %}
+                        -
+                    {% endif %}</td>
+                <td style="text-align: center;">{{ card['token'] if card['cardtype1']=='give'}}</td>
+                <td style="text-align: center;">{% if card['cost'] is not none %}
+                        {% if card['cost']==255 %}
+                        X
+                        {% else %}
+                        {{ card['cost'] }}
+                        {% endif %}
+                    {% endif %}</td>
                 <td>{{ card['cardText'] if card['cardText'] else ''}}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <a href="/furuDB/cardDB/">Back to Card Menu</a>
+    <a href="/furuDB/cardDB/">캐릭터 선택 창으로 돌아가기</a>
 </body>
 </html>

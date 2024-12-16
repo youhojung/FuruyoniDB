@@ -3,14 +3,31 @@
 <head>
     <title>Card Data</title>
     <meta charset="UTF-8">
+    <style>
+        h1{text-align: center;}
+        .card-container {display: flex; flex-wrap: wrap; justify-content: center;}
+        .card-item {width: 23%; margin: 10px; box-sizing: border-box;}
+        .card {width: 100%; text-align: center;}
+        .card img {width: 100%; height: auto;}
+        .card-text {padding: 10px 0;}
+    </style>
 </head>
 <body>
-    <h1>Card Character List</h1>
-    <ul>
-        {% for CharaInfo in chara %}
-        <a href="/furuDB/cardDB/{{ CharaInfo.charaname }}-{{ CharaInfo.another }}">{{ CharaInfo.Kname }}</a>
-        {% endfor %}
-    </ul>
-    <a href="/furuDB/">Back to Main</a>
+    <h1>카드 일람</h1>
+    <div class="container">
+        <div class="card-container">
+            {% for CharaInfo in chara %}
+            <div class="card-item">
+                <div class="card">
+                    <a href="/furuDB/cardDB/{{ CharaInfo.charaname }}-{{ CharaInfo.another }}">
+                        <img src="{{ url_for('static', filename='img/' ~ (CharaInfo.cNum | string) ~ '-' ~ CharaInfo.another ~ '.jpg') }}" class="card-img-top">
+                        <p class="card-text">{{ CharaInfo.Kname }}</p>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <a href="/furuDB/">메인 메뉴로 돌아가기</a>
 </body>
 </html>
